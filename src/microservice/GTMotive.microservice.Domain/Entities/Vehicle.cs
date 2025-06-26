@@ -73,12 +73,13 @@ namespace GTMotive.microservice.Domain.Entities
         /// <param name="model">The model name of the vehicle.</param>
         /// <param name="manufactureDate">The date the vehicle was manufactured. Must not be older than 5 years from the current date.</param>
         /// <exception cref="InvalidOperationException">Thrown if <paramref name="manufactureDate"/> is older than 5 years from the current date.</exception>
-        public Vehicle(string model, DateTime manufactureDate)
+        public Vehicle(string brand, string model, DateTime manufactureDate)
         {
             if (manufactureDate < DateTime.UtcNow.AddYears(-5))
                 throw new InvalidOperationException("Vehicles older than 5 years are not permitted.");
 
             Id = Guid.NewGuid().ToString();
+            Brand = brand;
             Model = model;
             ManufactureDate = manufactureDate;
             IsRented = false;
