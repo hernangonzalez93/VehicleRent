@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GTMotive.microservice.ApplicationCore\GTMotive.microservice.ApplicationCore.csproj" />
+    <ProjectReference Include="..\GTMotive.microservice.Domain\GTMotive.microservice.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

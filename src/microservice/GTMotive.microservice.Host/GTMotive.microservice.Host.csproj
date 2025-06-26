@@ -13,4 +13,14 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GTMotive.microservice.Api\GTMotive.microservice.Api.csproj" />
+    <ProjectReference Include="..\GTMotive.microservice.ApplicationCore\GTMotive.microservice.ApplicationCore.csproj" />
+    <ProjectReference Include="..\GTMotive.microservice.Infrastructure\GTMotive.microservice.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
