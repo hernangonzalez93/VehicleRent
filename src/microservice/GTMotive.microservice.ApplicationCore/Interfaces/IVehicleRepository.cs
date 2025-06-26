@@ -18,23 +18,27 @@ namespace GTMotive.microservice.ApplicationCore.Interfaces
         /// <param name="vehicle"></param>
         /// <returns></returns>
         Task AddAsync(Vehicle vehicle);
+
         /// <summary>
         /// GeT A Car by Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         Task<Vehicle?> GetByIdAsync(string id);
+
         /// <summary>
         /// List all vehicles in the inventory
         /// </summary>
         /// <returns></returns>
         Task<List<Vehicle>> ListAsync();
+
         /// <summary>
         /// Update a vehicle in the inventory
         /// </summary>
         /// <param name="vehicle"></param>
         /// <returns></returns>
         Task UpdateAsync(Vehicle vehicle);
+
         /// <summary>
         /// Determines whether the specified person has rented a vehicle.
         /// </summary>

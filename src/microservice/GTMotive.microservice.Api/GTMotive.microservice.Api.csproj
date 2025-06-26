@@ -11,4 +11,12 @@
     <ProjectReference Include="..\GTMotive.microservice.Infrastructure\GTMotive.microservice.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DependencyInjection\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
+  </ItemGroup>
+
 </Project>

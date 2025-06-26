@@ -25,13 +25,14 @@ namespace GTMotive.microservice.Infrastructure
             // Register MongoDB settings from configuration
             services.Configure<MongoDbSettings>(options => configuration.GetSection("MongoDb").Bind(options));
 
-
+            // set singleton for MongoDB client 
             services.AddSingleton<IMongoClient>(sp =>
             {
                 var settings = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
                 return new MongoClient(settings.ConnectionString);
             });
-      
+
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
 
             return services;
         }
