@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace GTMotive.microservice.Domain.Exceptions
 {
-    public  class BusinessRuleViolationException : Exception
+    /// <summary>
+    /// BusinessRuleViolationException is thrown when a business rule is violated.
+    /// </summary>
+    public class BusinessRuleViolationException : Exception
     {
+        /// <summary>
+        /// BusinessRuleViolationException constructor with a message parameter.
+        /// </summary>
+        /// <param name="message"></param>
         public BusinessRuleViolationException(string message) : base(message) { }
     }
 }
