@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,14 +19,17 @@ namespace GTMotive.microservice.Domain.Entities
         /// <summary>
         /// Brand of the vehicle.
         /// </summary>
+        [Required]
         public string Brand { get; set; }
         /// <summary>
         /// Model of the vehicle.
         /// </summary>
+        [Required]
         public string Model { get; init; }
         /// <summary>
         /// Manufacture date of the vehicle.
         /// </summary>
+        [Required]
         public DateTime ManufactureDate { get; init; }
         /// <summary>
         /// Is the vehicle currently rented?
@@ -110,6 +114,22 @@ namespace GTMotive.microservice.Domain.Entities
 
             IsRented = false;
             RentedBy = null;
+        }
+    }
+
+    public class VehicleValidator
+    {
+        /// <summary>
+        /// Validates a vehicle instance.
+        /// </summary>
+        /// <param name="vehicle">The vehicle instance to validate.</param>
+        /// <returns>A tuple containing a boolean indicating validity and a list of validation results.</returns>
+        public static (bool isValid, List<ValidationResult> results) Validate(Vehicle vehicle)
+        {
+            var context = new ValidationContext(vehicle);
+            var results = new List<ValidationResult>();
+            bool isValid = Validator.TryValidateObject(vehicle, context, results, true);
+            return (isValid, results);
         }
     }
 }
