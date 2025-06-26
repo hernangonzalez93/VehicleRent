@@ -1,0 +1,32 @@
+## Archivos de Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Salida de compilación
+[Bb]in/
+[Oo]bj/
+
+## Archivos de paquetes NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+
+## Docker
+docker-compose.override.yml
+*.env
+**/Dockerfile.*
+**/docker-compose*.yml
+.dockerignore
+
+## Archivos de configuración local
+appsettings.Development.json
+*.local.json
+*.secret.json
+
+## Otros
+*.log
+*.tmp
