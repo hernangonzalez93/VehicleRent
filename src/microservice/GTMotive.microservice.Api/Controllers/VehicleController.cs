@@ -37,6 +37,13 @@ namespace GTMotive.microservice.Api.Controllers
             _logger.LogInformation("Initialize vehicle creation..");
             try
             {
+                // Validate request model
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogInformation("Invalid model state");
+                    return BadRequest(ModelState);
+                }
+
                 var id = await _addVehicle.CreateVehicle(request.Brand ,request.Model, request.ManufactureDate);
                 _logger.LogInformation("Created");
                 return CreatedAtAction(nameof(GetAll), new { id }, new { id });

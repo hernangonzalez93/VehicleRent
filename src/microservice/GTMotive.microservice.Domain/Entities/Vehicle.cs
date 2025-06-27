@@ -19,17 +19,16 @@ namespace GTMotive.microservice.Domain.Entities
         /// <summary>
         /// Brand of the vehicle.
         /// </summary>
-        [Required]
         public string Brand { get; set; }
         /// <summary>
         /// Model of the vehicle.
         /// </summary>
-        [Required]
+
         public string Model { get; init; }
         /// <summary>
         /// Manufacture date of the vehicle.
         /// </summary>
-        [Required]
+        /// 
         public DateTime ManufactureDate { get; init; }
         /// <summary>
         /// Is the vehicle currently rented?

@@ -10,8 +10,17 @@ using System.Threading.Tasks;
 
 namespace GTMotive.test.unit
 {
+    /// <summary>
+    /// Contains unit tests for the <see cref="RentVehicleUseCase"/> class.
+    /// </summary>
     public class RentVehicleUseCaseTests
     {
+        /// <summary>
+        /// Verifies that the <see cref="RentVehicleUseCase.DoRent"/> method throws a  <see
+        /// cref="BusinessRuleViolationException"/> when attempting to rent a vehicle  for a person who has already
+        /// rented one.
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Should_Throw_If_Person_Already_Has_Vehicle()
         {
