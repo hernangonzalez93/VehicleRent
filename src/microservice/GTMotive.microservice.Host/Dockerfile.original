@@ -13,10 +13,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["GTMotive.microservice.Host/GTMotive.microservice.Host.csproj", "GTMotive.microservice.Host/"]
-COPY ["GTMotive.microservice.Api/GTMotive.microservice.Api.csproj", "GTMotive.microservice.Api/"]
-COPY ["GTMotive.microservice.ApplicationCore/GTMotive.microservice.ApplicationCore.csproj", "GTMotive.microservice.ApplicationCore/"]
-COPY ["GTMotive.microservice.Domain/GTMotive.microservice.Domain.csproj", "GTMotive.microservice.Domain/"]
-COPY ["GTMotive.microservice.Infrastructure/GTMotive.microservice.Infrastructure.csproj", "GTMotive.microservice.Infrastructure/"]
 RUN dotnet restore "./GTMotive.microservice.Host/GTMotive.microservice.Host.csproj"
 COPY . .
 WORKDIR "/src/GTMotive.microservice.Host"

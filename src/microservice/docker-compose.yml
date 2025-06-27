@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:7.0
+    container_name: mongo_vehicle_renting
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  gtmotive.microservice.host:
+    image: ${DOCKER_REGISTRY-}gtmotivemicroservicehost
+    build:
+      context: .
+      dockerfile: GTMotive.microservice.Host/Dockerfile
+    container_name: gtmotive.micro.host
+    depends_on:
+      - mongo 
+    ports:
+      - "5069:8080"
+    environment:
+      - MongoDb__ConnectionString=mongodb://mongo:27017
+      - MongoDb__MongoDbDatabaseName=vehicle_renting
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:8080
+
+volumes:
+  mongo_data:
