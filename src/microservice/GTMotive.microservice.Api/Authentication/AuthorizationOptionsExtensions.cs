@@ -13,7 +13,7 @@ namespace GTMotive.microservice.Api.Authentication
 {
     public static class AuthorizationOptionsExtensions
     {
-        public static IServiceCollection Configure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             var jwtSettings = configuration.GetSection("Jwt");
             var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);

@@ -71,7 +71,9 @@ namespace GTMotive.microservice.Api.Controllers
             return Ok(vehicles);
         }
 
+
         [HttpPost("{vehicleId}/rent")]
+        [Authorize]
         public async Task<IActionResult> Rent(string vehicleId, [FromBody] RentVehicleRequest request)
         {
             _logger.LogInformation($"Renting vehicle {vehicleId} for person {request.PersonId}");
