@@ -57,6 +57,7 @@ namespace GTMotive.microservice.Infrastructure.MongoDb.Documents
         {
             Id = vehicle.Id,
             Model = vehicle.Model,
+            Brand = vehicle.Brand,
             ManufactureDate = vehicle.ManufactureDate,
             IsRented = vehicle.IsRented,
             RentedBy = vehicle.RentedBy

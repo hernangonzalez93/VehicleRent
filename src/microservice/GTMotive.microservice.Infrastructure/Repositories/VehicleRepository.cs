@@ -2,6 +2,7 @@
 using GTMotive.microservice.Domain.Entities;
 using GTMotive.microservice.Infrastructure.MongoDb.Documents;
 using GTMotive.microservice.Infrastructure.MongoDb.Settings;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
@@ -17,21 +18,25 @@ namespace GTMotive.microservice.Infrastructure.Repositories
     /// </summary>
     /// <remarks>This repository is responsible for performing operations on vehicle data,</remarks>
     public class VehicleRepository : IVehicleRepository
+
     {
         private readonly IMongoCollection<VehicleDocument> _collection;
+        private readonly ILogger<VehicleRepository> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VehicleRepository"/> class, providing access to the vehicle
         /// collection in the MongoDB database.
         /// </summary>
-        /// <remarks>This constructor sets up the repository by connecting to the specified MongoDB
-        /// database and initializing the vehicle collection.</remarks>
         /// <param name="client">The <see cref="IMongoClient"/> used to connect to the MongoDB server.</param>
         /// <param name="options">The configuration options containing the MongoDB database name.</param>
-        public VehicleRepository(IMongoClient client, IOptions<MongoDbSettings> options)
+        ///  <param name="logger">logger.</param>
+        public VehicleRepository(IMongoClient client, 
+                                 IOptions<MongoDbSettings> options, 
+                                 ILogger<VehicleRepository> logger)
         {
             var database = client.GetDatabase(options.Value.MongoDbDatabaseName);
             _collection = database.GetCollection<VehicleDocument>("vehicles");
+            _logger = logger;
         }
 
         /// <summary>
@@ -42,6 +47,7 @@ namespace GTMotive.microservice.Infrastructure.Repositories
         public async Task AddAsync(Vehicle vehicle)
         {
             var doc = VehicleDocument.FromDomain(vehicle);
+            _logger.LogInformation($"Adding vehicle with Id: {doc.Id}, Model: {doc.Model}, ManufactureDate: {doc.ManufactureDate}");
             await _collection.InsertOneAsync(doc);
         }
 
@@ -54,6 +60,7 @@ namespace GTMotive.microservice.Infrastructure.Repositories
         public async Task<Vehicle?> GetByIdAsync(string id)
         {
             var doc = await _collection.Find(v => v.Id == id).FirstOrDefaultAsync();
+            _logger.LogInformation($"Retrieving vehicle with Id: {id}. Found: {doc != null}");
             return doc?.ToDomain();
         }
 
@@ -67,6 +74,7 @@ namespace GTMotive.microservice.Infrastructure.Repositories
         public async Task<List<Vehicle>> ListAsync()
         {
             var docs = await _collection.Find(_ => true).ToListAsync();
+            _logger.LogInformation($"Listing vehicles. Total count: {docs.Count}");
             return docs.Select(d => d.ToDomain()).ToList();
         }
 
@@ -81,6 +89,7 @@ namespace GTMotive.microservice.Infrastructure.Repositories
         public async Task UpdateAsync(Vehicle vehicle)
         {
             var doc = VehicleDocument.FromDomain(vehicle);
+            _logger.LogInformation($"Updating vehicle with Id: {doc.Id}, Model: {doc.Model}, ManufactureDate: {doc.ManufactureDate}");
             await _collection.ReplaceOneAsync(v => v.Id == vehicle.Id, doc);
         }
 
@@ -93,6 +102,7 @@ namespace GTMotive.microservice.Infrastructure.Repositories
         /// <returns><see langword="true"/> if the person has rented at least one vehicle; otherwise, <see langword="false"/>.</returns>
         public async Task<bool> HasPersonRentedVehicleAsync(string personId)
         {
+            _logger.LogInformation($"Checking if person with Id: {personId} has rented a vehicle.");
             return await _collection.Find(v => v.RentedBy == personId && v.IsRented).AnyAsync();
         }
     }

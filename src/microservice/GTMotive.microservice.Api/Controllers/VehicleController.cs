@@ -1,5 +1,6 @@
 ﻿using GTMotive.microservice.Api.Dtos;
 using GTMotive.microservice.ApplicationCore.Services;
+using GTMotive.microservice.Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,14 +21,20 @@ namespace GTMotive.microservice.Api.Controllers
 
         private readonly AddVehicleUseCase _addVehicle;
         private readonly ListVehiclesUseCase _listVehicles;
+        private readonly RentVehicleUseCase _rentVehicle;
+        private readonly ReturnVehicleUseCase _returnVehicle;
 
         public VehicleController(
             AddVehicleUseCase addVehicle,
             ListVehiclesUseCase listVehicles,
+            RentVehicleUseCase rentVehicle,
+            ReturnVehicleUseCase returnVehicle,
             ILogger<VehicleController> logger)
         {
             _addVehicle = addVehicle;
             _listVehicles = listVehicles;
+            _rentVehicle = rentVehicle;
+            _returnVehicle = returnVehicle;
             _logger = logger;
         }
 
@@ -62,6 +69,47 @@ namespace GTMotive.microservice.Api.Controllers
             var vehicles = await _listVehicles.GetVehicles();
             _logger.LogInformation("Returning vehicles");
             return Ok(vehicles);
+        }
+
+        [HttpPost("{vehicleId}/rent")]
+        public async Task<IActionResult> Rent(string vehicleId, [FromBody] RentVehicleRequest request)
+        {
+            _logger.LogInformation($"Renting vehicle {vehicleId} for person {request.PersonId}");
+            try
+            {    
+                await _rentVehicle.DoRent(vehicleId, request.PersonId);
+                return NoContent();
+            }
+            catch (BusinessRuleViolationException ex)
+            {
+                _logger.LogInformation($"Business rule violation: {ex.Message}");
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (KeyNotFoundException)
+            {
+                _logger.LogInformation($"Vehicle with ID {vehicleId} not found.");
+                return NotFound(new { message = "Vehicle not found.." });
+            }
+        }
+
+        [HttpPost("{vehicleId}/return")]
+        public async Task<IActionResult> Return(string vehicleId)
+        {
+            _logger.LogInformation($"Returning vehicle {vehicleId}");
+            try
+            {
+                await _returnVehicle.ReturnVehicle(vehicleId);
+                return NoContent();
+            }
+            catch (KeyNotFoundException)
+            {
+                _logger.LogInformation($"Vehicle with ID {vehicleId} not found.");
+                return NotFound(new { message = "Vehicle not found.." });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return StatusCode(400, new { message = ex.Message });
+            }
         }
     }
 }

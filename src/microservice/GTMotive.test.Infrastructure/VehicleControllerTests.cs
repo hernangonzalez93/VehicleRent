@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace GTMotive.test.Infrastructure
 {
+    /// <summary>
+    /// Provides tests for the VehicleController API, focusing on validation, behavior, and response handling.
+    /// </summary>
     public class VehicleControllerTests : IClassFixture<WebApplicationFactory<Program>>
     {
         private readonly WebApplicationFactory<Program> _factory;

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace GTMotive.test.Integration
 {
+    /// <summary>
+    /// Contains  tests for the <see cref="AddVehicleUseCase"/> class, verifying its behavior and functionality.
+    /// </summary>
     public class AddVehicleUseCaseTests
     {
         /// <summary>
