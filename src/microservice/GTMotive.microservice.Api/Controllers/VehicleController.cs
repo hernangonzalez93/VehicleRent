@@ -49,7 +49,6 @@ namespace GTMotive.microservice.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             _logger.LogInformation("Getting vehicles");
