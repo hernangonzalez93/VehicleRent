@@ -16,11 +16,7 @@ packages/
 *.nuspec
 
 ## Docker
-docker-compose.override.yml
-*.env
-**/Dockerfile.*
-**/docker-compose*.yml
-.dockerignore
+
 
 ## Archivos de configuración local
 appsettings.Development.json

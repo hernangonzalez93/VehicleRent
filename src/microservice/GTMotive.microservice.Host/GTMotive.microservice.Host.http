@@ -1,0 +1,6 @@
+@GTMotive.microservice.Host_HostAddress = http://localhost:5121
+
+GET {{GTMotive.microservice.Host_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
