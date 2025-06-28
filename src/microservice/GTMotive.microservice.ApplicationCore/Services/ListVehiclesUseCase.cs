@@ -1,4 +1,5 @@
 ﻿using GTMotive.microservice.ApplicationCore.Interfaces;
+using GTMotive.microservice.ApplicationCore.Ports;
 using GTMotive.microservice.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace GTMotive.microservice.ApplicationCore.Services
     /// </summary>
     /// <remarks>This use case interacts with an <see cref="IVehicleRepository"/> to fetch vehicle data. It is
     /// designed to encapsulate the logic for listing vehicles, ensuring separation of concerns.</remarks>
-    public class ListVehiclesUseCase
+    public class ListVehiclesUseCase : IListVehiclesUseCase
     {
         private readonly IVehicleRepository _repository;
 

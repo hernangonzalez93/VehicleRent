@@ -1,4 +1,5 @@
 ﻿using GTMotive.microservice.ApplicationCore.Interfaces;
+using GTMotive.microservice.ApplicationCore.Ports;
 using GTMotive.microservice.ApplicationCore.Services;
 using GTMotive.microservice.Domain.Exceptions;
 using Moq;
@@ -22,7 +23,7 @@ namespace GTMotive.test.unit
             var repo = new Mock<IVehicleRepository>();
             repo.Setup(r => r.HasPersonRentedVehicleAsync("user1")).ReturnsAsync(true);
 
-            var useCase = new RentVehicleUseCase(repo.Object);
+            IRentVehicleUseCase useCase = new RentVehicleUseCase(repo.Object);
 
             await Assert.ThrowsAsync<BusinessRuleViolationException>(() =>
                 useCase.DoRent("v1", "user1"));

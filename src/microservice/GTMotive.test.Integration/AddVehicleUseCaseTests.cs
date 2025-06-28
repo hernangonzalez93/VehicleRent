@@ -1,4 +1,5 @@
 ﻿using GTMotive.microservice.ApplicationCore.Interfaces;
+using GTMotive.microservice.ApplicationCore.Ports;
 using GTMotive.microservice.ApplicationCore.Services;
 using GTMotive.microservice.Domain.Entities;
 using System;
@@ -44,12 +45,16 @@ namespace GTMotive.test.Integration
         }
 
 
-
+        /// <summary>
+        /// Tests the functionality of adding a vehicle to the fleet using the <see cref="IAddVehicleUseCase"/>
+        /// implementation.
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Should_Add_Vehicle_To_Fleet()
         {
             var repo = new MockVehicleRepository();
-            var useCase = new AddVehicleUseCase(repo);
+            IAddVehicleUseCase useCase = new AddVehicleUseCase(repo);
 
             var id = await useCase.CreateVehicle("Ford","Raptor", DateTime.UtcNow.AddYears(-1));
             var vehicle = await repo.GetByIdAsync(id);

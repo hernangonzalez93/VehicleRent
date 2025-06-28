@@ -1,4 +1,5 @@
 ﻿using GTMotive.microservice.Api.Dtos;
+using GTMotive.microservice.ApplicationCore.Ports;
 using GTMotive.microservice.ApplicationCore.Services;
 using GTMotive.microservice.Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
@@ -17,18 +18,27 @@ namespace GTMotive.microservice.Api.Controllers
     [Route("api/vehicles")]
     public class VehicleController : ControllerBase
     {
+        
+        private readonly IAddVehicleUseCase _addVehicle;
+        private readonly IListVehiclesUseCase _listVehicles;
+        private readonly IRentVehicleUseCase _rentVehicle;
+        private readonly IReturnVehicleUseCase _returnVehicle;
         private readonly ILogger<VehicleController> _logger;
 
-        private readonly AddVehicleUseCase _addVehicle;
-        private readonly ListVehiclesUseCase _listVehicles;
-        private readonly RentVehicleUseCase _rentVehicle;
-        private readonly ReturnVehicleUseCase _returnVehicle;
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VehicleController"/> class, providing functionality  for
+        /// managing vehicle operations such as adding, listing, renting, and returning vehicles.
+        /// </summary>
+        /// <param name="addVehicle">The use case for adding a new vehicle to the system.</param>
+        /// <param name="listVehicles">The use case for retrieving a list of available vehicles.</param>
+        /// <param name="rentVehicle">The use case for renting a vehicle.</param>
+        /// <param name="returnVehicle">The use case for returning a rented vehicle.</param>
+        /// <param name="logger">The logger instance used for logging operations and diagnostics.</param>
         public VehicleController(
-            AddVehicleUseCase addVehicle,
-            ListVehiclesUseCase listVehicles,
-            RentVehicleUseCase rentVehicle,
-            ReturnVehicleUseCase returnVehicle,
+            IAddVehicleUseCase addVehicle,
+            IListVehiclesUseCase listVehicles,
+            IRentVehicleUseCase rentVehicle,
+            IReturnVehicleUseCase returnVehicle,
             ILogger<VehicleController> logger)
         {
             _addVehicle = addVehicle;
@@ -38,6 +48,11 @@ namespace GTMotive.microservice.Api.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        ///  Creates a new vehicle with the specified details and adds it to the system.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Create(CreateVehicleRequest request)
         {
@@ -62,6 +77,10 @@ namespace GTMotive.microservice.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets all vehicles available in the system.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -72,6 +91,12 @@ namespace GTMotive.microservice.Api.Controllers
         }
 
 
+        /// <summary>
+        ///  Rents a vehicle to a person identified by their ID.
+        /// </summary>
+        /// <param name="vehicleId"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost("{vehicleId}/rent")]
         [Authorize]
         public async Task<IActionResult> Rent(string vehicleId, [FromBody] RentVehicleRequest request)
@@ -94,6 +119,11 @@ namespace GTMotive.microservice.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Returns a rented vehicle identified by its ID.
+        /// </summary>
+        /// <param name="vehicleId"></param>
+        /// <returns></returns>
         [HttpPost("{vehicleId}/return")]
         public async Task<IActionResult> Return(string vehicleId)
         {
