@@ -1,4 +1,5 @@
 ﻿using GTMotive.microservice.ApplicationCore.Interfaces;
+using GTMotive.microservice.ApplicationCore.Ports;
 using GTMotive.microservice.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace GTMotive.microservice.ApplicationCore.Services
     /// <remarks>This class provides functionality to create and persist a new vehicle using the specified
     /// repository. It encapsulates the process of vehicle creation and ensures the vehicle is stored in the underlying
     /// data source.</remarks>
-    public class AddVehicleUseCase
+    public class AddVehicleUseCase : IAddVehicleUseCase
     {
         private readonly IVehicleRepository _repository;
 

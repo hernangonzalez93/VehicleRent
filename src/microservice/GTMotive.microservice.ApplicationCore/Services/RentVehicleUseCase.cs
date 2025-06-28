@@ -1,4 +1,5 @@
 ﻿using GTMotive.microservice.ApplicationCore.Interfaces;
+using GTMotive.microservice.ApplicationCore.Ports;
 using GTMotive.microservice.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace GTMotive.microservice.ApplicationCore.Services
     /// <remarks>This use case ensures that a person can rent a vehicle only if they do not already have a
     /// vehicle rented. It retrieves the specified vehicle, validates its availability, and updates its state to reflect
     /// the rental.</remarks>
-    public class RentVehicleUseCase
+    public class RentVehicleUseCase : IRentVehicleUseCase
     {
         private readonly IVehicleRepository _repository;
 
@@ -30,9 +31,6 @@ namespace GTMotive.microservice.ApplicationCore.Services
         /// <summary>
         /// Initiates the rental process for a vehicle by a specified person.
         /// </summary>
-        /// <remarks>This method checks whether the person has already rented a vehicle and ensures the
-        /// specified vehicle exists. If the rental is valid, the vehicle's state is updated to reflect the rental, and
-        /// the changes are persisted.</remarks>
         /// <param name="vehicleId">The unique identifier of the vehicle to be rented. Cannot be null or empty.</param>
         /// <param name="personId">The unique identifier of the person renting the vehicle. Cannot be null or empty.</param>
         /// <returns></returns>

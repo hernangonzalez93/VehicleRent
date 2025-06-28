@@ -1,4 +1,5 @@
 ﻿using GTMotive.microservice.ApplicationCore.Interfaces;
+using GTMotive.microservice.ApplicationCore.Ports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace GTMotive.microservice.ApplicationCore.Services
     /// <remarks>This use case retrieves the vehicle by its identifier, updates its state to indicate it has
     /// been returned,  and persists the changes in the repository. If the vehicle is not found, a <see
     /// cref="KeyNotFoundException"/>  is thrown.</remarks>
-    public class ReturnVehicleUseCase
+    public class ReturnVehicleUseCase : IReturnVehicleUseCase
     {
         private readonly IVehicleRepository _repository;
 

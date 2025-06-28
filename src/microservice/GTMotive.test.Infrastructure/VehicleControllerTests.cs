@@ -18,11 +18,16 @@ namespace GTMotive.test.Infrastructure
     public class VehicleControllerTests : IClassFixture<WebApplicationFactory<Program>>
     {
         private readonly WebApplicationFactory<Program> _factory;
+
         public VehicleControllerTests(WebApplicationFactory<Program> factory)
         {
             _factory = factory;
         }
 
+        /// <summary>
+        /// Validates that the vehicle creation request fails when the model is missing or invalid.
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Should_Validate_Model_On_Create()
         {
@@ -58,7 +63,9 @@ namespace GTMotive.test.Infrastructure
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-
+        /// <summary>
+        /// Represents a detailed validation problem response, typically used in APIs to convey validation errors.
+        /// </summary>
         public class ValidationProblemDetails
         {
             [JsonPropertyName("title")]

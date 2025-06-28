@@ -1,4 +1,5 @@
-﻿using GTMotive.microservice.ApplicationCore.Services;
+﻿using GTMotive.microservice.ApplicationCore.Ports;
+using GTMotive.microservice.ApplicationCore.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,10 @@ namespace GTMotive.microservice.ApplicationCore
         public static IServiceCollection AddApplicationCore(this IServiceCollection services)
         {
             // ad application core services for vehicle management use cases
-            services.AddScoped<AddVehicleUseCase>();
-            services.AddScoped<ListVehiclesUseCase>();
-            services.AddScoped<RentVehicleUseCase>();
-            services.AddScoped<ReturnVehicleUseCase>();
+            services.AddScoped<IAddVehicleUseCase,AddVehicleUseCase>();
+            services.AddScoped<IListVehiclesUseCase,ListVehiclesUseCase>();
+            services.AddScoped<IRentVehicleUseCase,RentVehicleUseCase>();
+            services.AddScoped<IReturnVehicleUseCase,ReturnVehicleUseCase>();
             return services;
         }
     }
